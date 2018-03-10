@@ -19,3 +19,4 @@ class List(Resource):
             ) for c in courses
             ]
         return dict(courses=ls)
+#

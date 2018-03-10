@@ -105,17 +105,17 @@ class professor(BaseModel):
         db_table = "professor"
 
 # -----------------Choice_Course-----------------
-class Choice_Course(BaseModel):
-    id = PrimaryKeyField()
-    Student_student_number_id = ForeignKeyField(Student)
-    status = EnumField(choices=["accept", "non_accept"])
-    score = FloatField()
-    semeter = CharField()
-    Group_Course_code_course_id = ForeignKeyField(group_course)
-    status_pay = EnumField(choices=["yes", "on"])
-
-    class Meta:
-        db_table = "choice_course"
+# class Choice_Course(BaseModel):
+#     id = PrimaryKeyField()
+#     Student_student_number = ForeignKeyField(Student)
+#     status = EnumField(choices=["accept", "non_accept"])
+#     score = FloatField()
+#     semeter = CharField()
+#     Group_Course_code_course = ForeignKeyField(group_course)
+#     status_pay = EnumField(choices=["yes", "on"])
+#
+#     class Meta:
+#         db_table = "choice_course"
 
 
 

@@ -3,7 +3,7 @@
 
 from flask import session, url_for, request, redirect, g
 from flask_httpauth import HTTPBasicAuth, HTTPTokenAuth
-from model.model import Users
+from model.model import Student
 from flask_restful import Resource
 
 __author__ = 'mahdi'
@@ -16,11 +16,11 @@ auth2 = HTTPTokenAuth()
 @auth.verify_password
 def verify_password(username_or_token, password):
     # first try to authenticate by token
-    user = Users.verify_auth_token(username_or_token)
+    user = Student.verify_auth_token(username_or_token)
     if not user:
         # try to authenticate with username/password
         try:
-            user = Users.get(Users.username == username_or_token)
+            user = Student.get(Student.student_number == username_or_token)
         except:
             user = None
         if not user or not user.verify_password(password):
@@ -31,7 +31,7 @@ def verify_password(username_or_token, password):
 
 @auth2.verify_token
 def verify_token(token):
-    user = Users.verify_auth_token(token)
+    user = Student.verify_auth_token(token)
     if user:
         g.user = user
         return True
@@ -50,11 +50,14 @@ class Login(Resource):
         return {'token': token.decode('ascii'), 'duration': 600}
 
 
+
+
+
 class Main(Resource):
     @auth2.login_required
     def get(self):
-        return dict(username=g.user.username, id=g.user.id)
+        return dict(username=g.user.student_number, id=g.user.student_number)
 
     @auth2.login_required
     def post(self):
-        return dict(username=g.user.username, id=g.user.id)
+        return dict(username=g.user.student_number, id=g.user.student_number)
