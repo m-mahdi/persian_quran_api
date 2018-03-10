@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+from  peewee import *
 from peewee import SqliteDatabase, Model, IntegerField, DateTimeField, CharField, PrimaryKeyField, MySQLDatabase, SQL, \
     Field
 from passlib.apps import custom_app_context as pwd_context
@@ -10,14 +11,14 @@ import env
 
 # from model.Enum import EnumField
 
-__author__ = 'Zaaferani'
-database = MySQLDatabase('qurandb', user='root', password='',
+__author__ = 'mahdi'
+database1 = MySQLDatabase('qurandb', user='root', password='',
                          host='127.0.0.1', port=3306)
 
 
 class BaseModel(Model):
     class Meta:
-        database = database
+        database = database1
 
 
 class EnumField(Field):
@@ -52,40 +53,40 @@ class EnumField(Field):
 
 
 # noinspection PyBroadException
-# class Users(BaseModel):
-#     id = PrimaryKeyField()
-#     username = CharField(unique=True)
-#     password = CharField()
-#     enabled = IntegerField(default=1)
-#
-#     def hash_password(self, password):
-#         self.password = pwd_context.encrypt(password)
-#
-#     def verify_password(self, password):
-#         return pwd_context.verify(password, self.password)
-#
-#     def generate_auth_token(self, expiration=600):
-#         s = Serializer(env.secret_key, expires_in=expiration)
-#         return s.dumps({'id': self.id})
-#
-#     @staticmethod
-#     def verify_auth_token(token):
-#         s = Serializer(env.secret_key)
-#         try:
-#             data = s.loads(token)
-#         except SignatureExpired:
-#             return None  # valid token, but expired
-#         except BadSignature:
-#             return None  # invalid token
-#         try:
-#             user = Users.get(Users.id == data['id'])
-#             return user
-#         except:
-#             return None
-#
-#     class Meta:
-#         db_table = "users"
-#         order_by = ('id',)
+class Users(BaseModel):
+    id = PrimaryKeyField()
+    username = CharField(unique=True)
+    password = CharField()
+    enabled = IntegerField(default=1)
+
+    def hash_password(self, password):
+        self.password = pwd_context.encrypt(password)
+
+    def verify_password(self, password):
+        return pwd_context.verify(password, self.password)
+
+    def generate_auth_token(self, expiration=600):
+        s = Serializer(env.secret_key, expires_in=expiration)
+        return s.dumps({'id': self.id})
+
+    @staticmethod
+    def verify_auth_token(token):
+        s = Serializer(env.secret_key)
+        try:
+            data = s.loads(token)
+        except SignatureExpired:
+            return None  # valid token, but expired
+        except BadSignature:
+            return None  # invalid token
+        try:
+            user = Users.get(Users.id == data['id'])
+            return user
+        except:
+            return None
+
+    class Meta:
+        db_table = "users"
+        order_by = ('id',)
 
 
 # class Books(BaseModel):
@@ -108,6 +109,44 @@ class course(BaseModel):
 
     class Meta:
         db_table = "course"
+
+
+class group_course(BaseModel):
+    code_course = PrimaryKeyField()
+    group_number = CharField()
+    semester = CharField()
+    capacity = IntegerField()
+    min_capacity = IntegerField()
+    Course_id = IntegerField()
+    professor_id = IntegerField()
+    Time_Course_id = IntegerField()
+    guest_semester = CharField()
+    date_exam = CharField()
+    time_exam = CharField()
+    term = CharField()
+
+    class Meta:
+        db_table = "group_course"
+
+class professor(BaseModel):
+
+    id = PrimaryKeyField()
+    firstname = CharField()
+    lastname = CharField()
+    father = CharField()
+    sex = EnumField(choices=["male","female"])
+    national_code = CharField()
+    birthday = CharField()
+    location_brith = CharField()
+    password = TextField()
+    phone = CharField()
+    mobile = CharField()
+    address = TextField()
+    img = CharField()
+
+    class Meta:
+        db_table = "professor"
+
 
 
 
