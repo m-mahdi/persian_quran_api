@@ -12,15 +12,15 @@ import env
 # from model.Enum import EnumField
 
 __author__ = 'mahdi'
-database1 = MySQLDatabase('qurandb', user='root', password='',
+database = MySQLDatabase('qurandb', user='root', password='',
                          host='127.0.0.1', port=3306)
 
 
 class BaseModel(Model):
     class Meta:
-        database = database1
+        database = database
 
-
+# ------------EnumField--------------
 class EnumField(Field):
     db_field = "enum"
 
@@ -50,14 +50,105 @@ class EnumField(Field):
 
     def __ddl_column__(self, ctype):
         return SQL("e_%s" % self.name)
+# --------------end EnumField-----------------------------
 
-
-# noinspection PyBroadException
-class Users(BaseModel):
+# -----------course-----------------
+class course(BaseModel):
     id = PrimaryKeyField()
-    username = CharField(unique=True)
+    presentation = EnumField(choices=["theoretic", "practical"])
+    type = EnumField(choices=["basic", "prime", "professional", "public"])
+    name = CharField()
+    unit_number = IntegerField()
+    price = CharField()
+    status_prerequisite = EnumField(choices=["yes", "no"])
+    list_prerequisite = CharField()
+
+    class Meta:
+        db_table = "course"
+
+# -----------------group_course-----------------
+class group_course(BaseModel):
+    code_course = PrimaryKeyField()
+    group_number = CharField()
+    semester = CharField()
+    capacity = IntegerField()
+    min_capacity = IntegerField()
+    Course_id = IntegerField()
+    professor_id = IntegerField()
+    Time_Course_id = IntegerField()
+    guest_semester = CharField()
+    date_exam = CharField()
+    time_exam = CharField()
+    term = CharField()
+
+    class Meta:
+        db_table = "group_course"
+
+# -----------------professor------------------
+class professor(BaseModel):
+
+    id = PrimaryKeyField()
+    firstname = CharField()
+    lastname = CharField()
+    father = CharField()
+    sex = EnumField(choices=["male","female"])
+    national_code = CharField()
+    birthday = CharField()
+    location_brith = CharField()
+    password = TextField()
+    phone = CharField()
+    mobile = CharField()
+    address = TextField()
+    img = CharField()
+
+    class Meta:
+        db_table = "professor"
+
+# -----------------Choice_Course-----------------
+class Choice_Course(BaseModel):
+    id = PrimaryKeyField()
+    Student_student_number_id = ForeignKeyField(Student)
+    status = EnumField(choices=["accept", "non_accept"])
+    score = FloatField()
+    semeter = CharField()
+    Group_Course_code_course_id = ForeignKeyField(group_course)
+    status_pay = EnumField(choices=["yes", "on"])
+
+    class Meta:
+        db_table = "choice_course"
+
+
+
+# ------------Time_Course--------------
+class Time_Course(BaseModel):
+    id = PrimaryKeyField()
+    days = IntegerField()
+    time = IntegerField()
+    classes = IntegerField()
+    rotatory = EnumField(choices=['1', '2'])
+    day_rotatory = EnumField(choices=['zoj', 'fard'])
+
+    class Meta:
+        db_table = "time_course"
+
+
+# -------------------Student------------------------
+class Student(BaseModel):
+    firstname = CharField()
+    lastname = CharField()
+    father = CharField()
+    brithday = CharField()
+    location_brith = CharField()
+    phone = CharField()
+    mobile = CharField()
+    national_code = CharField()
+    status = EnumField(choices=['active', 'non_active', 'expulsion', 'alumnus'])
+    entry_semester = CharField()
+    address = TextField()
+    student_number = PrimaryKeyField()
+    id = CharField()
     password = CharField()
-    enabled = IntegerField(default=1)
+    img = CharField()
 
     def hash_password(self, password):
         self.password = pwd_context.encrypt(password)
@@ -79,86 +170,26 @@ class Users(BaseModel):
         except BadSignature:
             return None  # invalid token
         try:
-            user = Users.get(Users.id == data['id'])
+            user = Student.get(Student.id == data['id'])
             return user
         except:
             return None
 
     class Meta:
-        db_table = "users"
-        order_by = ('id',)
+        db_table = "student"
+        order_by = ('student_number',)
 
 
-# class Books(BaseModel):
-#     id = PrimaryKeyField()
-#     title = CharField(50)
-#     author = CharField(30)
-#
-#     class Meta:
-#         db_table = "books"
-
-class course(BaseModel):
-    id = PrimaryKeyField()
-    presentation = EnumField(choices=["theoretic", "practical"])
-    type = EnumField(choices=["basic", "prime", "professional", "public"])
-    name = CharField()
-    unit_number = IntegerField()
-    price = CharField()
-    status_prerequisite = EnumField(choices=["yes", "no"])
-    list_prerequisite = CharField()
-
-    class Meta:
-        db_table = "course"
-
-
-class group_course(BaseModel):
-    code_course = PrimaryKeyField()
-    group_number = CharField()
-    semester = CharField()
-    capacity = IntegerField()
-    min_capacity = IntegerField()
-    Course_id = IntegerField()
-    professor_id = IntegerField()
-    Time_Course_id = IntegerField()
-    guest_semester = CharField()
-    date_exam = CharField()
-    time_exam = CharField()
-    term = CharField()
-
-    class Meta:
-        db_table = "group_course"
-
-class professor(BaseModel):
-
-    id = PrimaryKeyField()
-    firstname = CharField()
-    lastname = CharField()
-    father = CharField()
-    sex = EnumField(choices=["male","female"])
-    national_code = CharField()
-    birthday = CharField()
-    location_brith = CharField()
-    password = TextField()
-    phone = CharField()
-    mobile = CharField()
-    address = TextField()
-    img = CharField()
-
-    class Meta:
-        db_table = "professor"
-
-
-
-
+    #
     # if __name__ == '__main__':
-
-    # u = Users()
-    # u.username = "ali"
+    #
+    # a.id = student()
+    # a.username = "ali"
     # u.hash_password("123")
     # u.enabled = 1
     # u.save()
     #
-    # u = Users()
+    # u = student()
     # u.username = "hassan"
     # u.hash_password("123456")
     # u.enabled = 1
