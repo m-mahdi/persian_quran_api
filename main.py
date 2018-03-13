@@ -53,8 +53,8 @@ class Login(Resource):
 class Main(Resource):
     @auth2.login_required
     def get(self):
-        return dict(username=g.user.username, id=g.user.id)
+        return dict(username=g.user.username, id=g.user.student_number)
 
     @auth2.login_required
     def post(self):
-        return dict(username=g.user.username, id=g.user.id)
+        return dict(username=g.user.username, id=g.user.student_number)
