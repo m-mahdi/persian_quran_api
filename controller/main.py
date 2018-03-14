@@ -61,7 +61,7 @@ def verify_token(token):
         return True
     return False
 
-class Login(Resource):
+class Login (Resource):
     @auth.login_required
     def get(self):
         token = g.user.generate_auth_token(600)

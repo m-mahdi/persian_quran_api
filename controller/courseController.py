@@ -5,7 +5,7 @@ from model.model import Course, group_Course
 
 # -----------------careate model groupcourse---------------
 class List(Resource):
-    # @auth2.login_required
+    @auth2.login_required
     def get(self):
         group_courses = group_Course.select()
         ls = [

@@ -18,4 +18,4 @@ api.add_resource (main.Main, '/', endpoint= 'index')
 
 if __name__ == '__main__':
     database.connect ()
-    app.run ('0.0.0.0', 5000, True)
+    app.run ('0.0.0.0', 5000 , True)
