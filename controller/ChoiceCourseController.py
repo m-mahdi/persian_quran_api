@@ -14,48 +14,48 @@ class List( Resource ):
         choice_courses = Choice_Course.select().where( Choice_Course.Student_student_number == g.user.student_number )
         ls = [
             dict(
-                id=Choice_Course.id,
-                Student_student_number=Choice_Course,
-                status=Choice_Course.status,
-                score=Choice_Course.score,
-                semeter=Choice_Course.semeter,
-                status_pay=Choice_Course.status_pay,
+                id=choice_course.id,
+                Student_student_number=choice_course,
+                status=choice_course.status,
+                score=choice_course.score,
+                semeter=choice_course.semeter,
+                status_pay=choice_course.status_pay,
                 Group_Course_code_course=[dict(
-                    code_course=Choice_Course.Group_Course_code_course.code_course,
-                    group_number=Choice_Course.Group_Course_code_course.group_number,
-                    semester=Choice_Course.Group_Course_code_course.semester,
-                    guest_semester=Choice_Course.Group_Course_code_course.guest_semester,
-                    date_exam=Choice_Course.Group_Course_code_course.date_exam,
-                    time_exam=Choice_Course.Group_Course_code_course.time_exam,
-                    term=Choice_Course.Group_Course_code_course.term,
-                    capacity=Choice_Course.Group_Course_code_course.capacity,
-                    min_capacity=Choice_Course.Group_Course_code_course.min_capacity,
+                    code_course=choice_course.Group_Course_code_course.code_course,
+                    group_number=choice_course.Group_Course_code_course.group_number,
+                    semester=choice_course.Group_Course_code_course.semester,
+                    guest_semester=choice_course.Group_Course_code_course.guest_semester,
+                    date_exam=choice_course.Group_Course_code_course.date_exam,
+                    time_exam=choice_course.Group_Course_code_course.time_exam,
+                    term=choice_course.Group_Course_code_course.term,
+                    capacity=choice_course.Group_Course_code_course.capacity,
+                    min_capacity=choice_course.Group_Course_code_course.min_capacity,
                     Course_id=[dict(
-                        id=Choice_Course.Group_Course_code_course.Course_id.id,
-                        presentation=Choice_Course.Group_Course_code_course.Course_id.presentation,
-                        type=Choice_Course.Group_Course_code_course.Course_id.type,
-                        status_prerequisite=Choice_Course.Group_Course_code_course.Course_id.status_prerequisite,
-                        name=Choice_Course.Group_Course_code_course.Course_id.name,
-                        unit_number=Choice_Course.Group_Course_code_course.Course_id.unit_number,
-                        price=Choice_Course.Group_Course_code_course.Course_id.price,
-                        list_prerequisite=Choice_Course.Group_Course_code_course.Course_id.list_prerequisite,
+                        id=choice_course.Group_Course_code_course.Course_id.id,
+                        presentation=choice_course.Group_Course_code_course.Course_id.presentation,
+                        type=choice_course.Group_Course_code_course.Course_id.type,
+                        status_prerequisite=choice_course.Group_Course_code_course.Course_id.status_prerequisite,
+                        name=choice_course.Group_Course_code_course.Course_id.name,
+                        unit_number=choice_course.Group_Course_code_course.Course_id.unit_number,
+                        price=choice_course.Group_Course_code_course.Course_id.price,
+                        list_prerequisite=choice_course.Group_Course_code_course.Course_id.list_prerequisite,
                     )],
                     professor_id=[dict(
-                        firstname=Choice_Course.Group_Course_code_course.professor_id.firstname,
-                        lastname=Choice_Course.Group_Course_code_course.professor_id.lastname,
+                        firstname=choice_course.Group_Course_code_course.professor_id.firstname,
+                        lastname=choice_course.Group_Course_code_course.professor_id.lastname,
 
                     )],
                     Time_Course_id=[dict(
-                        id=Choice_Course.Group_Course_code_course.Time_Course_id.id,
-                        days=Choice_Course.Group_Course_code_course.Time_Course_id.days,
-                        time=Choice_Course.Group_Course_code_course.Time_Course_id.time,
-                        classes=Choice_Course.Group_Course_code_course.Time_Course_id.classes,
-                        rotatory=Choice_Course.Group_Course_code_course.Time_Course_id.rotatory,
-                        day_rotatory=Choice_Course.Group_Course_code_course.Time_Course_id.day_rotatory,
+                        id=choice_course.Group_Course_code_course.Time_Course_id.id,
+                        days=choice_course.Group_Course_code_course.Time_Course_id.days,
+                        time=choice_course.Group_Course_code_course.Time_Course_id.time,
+                        classes=choice_course.Group_Course_code_course.Time_Course_id.classes,
+                        rotatory=choice_course.Group_Course_code_course.Time_Course_id.rotatory,
+                        day_rotatory=choice_course.Group_Course_code_course.Time_Course_id.day_rotatory,
                     )]
                 )],
 
-            ) for Choice_Course in choice_courses
+            ) for choice_course in choice_courses
             ]
         return dict( courses=ls )
 
