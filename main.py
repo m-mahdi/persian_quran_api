@@ -58,3 +58,4 @@ class Main(Resource):
     @auth2.login_required
     def post(self):
         return dict(username=g.user.username, id=g.user.student_number)
+
