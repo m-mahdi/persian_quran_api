@@ -6,8 +6,8 @@ import os
 
 from passlib.handlers.bcrypt import bcrypt
 from peewee import *
-from peewee import SqliteDatabase, Model, IntegerField, DateTimeField, CharField, PrimaryKeyField, MySQLDatabase, SQL, \
-    Field
+# from peewee import SqliteDatabase, Model, IntegerField, DateTimeField, CharField, PrimaryKeyField, MySQLDatabase, SQL, \
+#     Field
 from passlib.apps import custom_app_context as pwd_context
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
 import env

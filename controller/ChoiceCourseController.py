@@ -4,7 +4,7 @@ from flask_httpauth import HTTPBasicAuth, HTTPTokenAuth
 from flask import session, url_for, request, redirect, g
 from pyramid.tests.test_predicates import predicate
 
-from Model.model import Choice_Course, group_Course, Student, Course
+from model.model import Choice_Course, group_Course, Student, Course
 from main import auth2
 
 

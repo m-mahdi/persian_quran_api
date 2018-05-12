@@ -34,14 +34,7 @@ class List(Resource):
                     lastname=group_course.professor_id.lastname,
 
                 ),
-                Time_Course_id=dict(
-                    id =group_course.Time_Course_id.id,
-                    days =group_course.Time_Course_id.days,
-                    time =group_course.Time_Course_id.time,
-                    classes =group_course.Time_Course_id.classes,
-                    rotatory = group_course.Time_Course_id.rotatory,
-                    day_rotatory=group_course.Time_Course_id.day_rotatory,
-                ),
+
         ) for group_course in group_courses
         ]
         return dict( courses=ls )
